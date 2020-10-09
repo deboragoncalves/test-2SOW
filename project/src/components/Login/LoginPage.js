@@ -10,9 +10,7 @@ toast.configure()
 
 const InitialState = {
     username: "",
-    password: "",
-    usernameError: "",
-    passwordError: ""
+    password: ""
 }
 
 /* Customizar Toast. Inicial maiúscula. */
@@ -30,7 +28,7 @@ const ToastUsername = () => {
 }
 
 
-class Login extends Component {
+class LoginPage extends Component {
     constructor() {
         super()
         this.state = InitialState
@@ -48,22 +46,16 @@ class Login extends Component {
     }
 
     validateForm = () => {
-        let usernameError = "";
-        let passwordError = "";
 
         /* Se não for válido, setar valor do state, exibir warning e retornar false */
 
         if (this.state.password.length < 5) {
-            passwordError = "Senha inválida."
             toast.warning(<ToastPassword />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
-            this.setState({ passwordError })
             return false;
         } 
         
         if (!this.state.username.includes("@") || !this.state.username.includes(".com")) {
-            usernameError = "Usuário inválido."
             toast.warning(<ToastUsername />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
-            this.setState({ usernameError })
             return false;
         }
 
@@ -116,4 +108,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default LoginPage;
