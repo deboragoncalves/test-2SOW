@@ -6,9 +6,17 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import axios from 'axios'
 
+import InputMask from 'react-input-mask'
+
 const ToastEmail = () => {
     return (
         <div>O campo "Email" deve estar em formato de Email (@, .com).</div>
+    )
+}
+
+const ToastCep = () => {
+    return (
+        <div>O campo "CEP" deve ter 8 números.</div>
     )
 }
 
@@ -60,24 +68,31 @@ class NewUser extends Component {
     }
 
     onBlurCep = e => {
-
-        // Validar CEP (máscara): 8 digítos. Sem pontos e traços.
-
-        // Autocomplete CEP - ViaCep quando sair do input 
-
-        axios.get('https://viacep.com.br/ws/' + e.target.value + '/json/')
-        .then(res => {
-
-            // Set state de acordo com os dados do json (viacep)
-
-            this.setState({ 
-                street: res.data.logradouro,
-                district: res.data.bairro,
-                city: res.data.localidade 
-            })
         
-        })
-        .catch(error => { console.log("Error" + error)})
+        // Validar CEP
+
+        if (e.target.value?.length !== 8) {
+            return;
+        } else {
+
+            this.setState({ cep: e.target.value })
+
+            // Autocomplete CEP - ViaCep quando sair do input
+
+            axios.get('https://viacep.com.br/ws/' + e.target.value + '/json/')
+                .then(res => {
+
+                    // Setar state de acordo com os dados do json (viacep)
+
+                    this.setState({ 
+                        street: res.data.logradouro,
+                        district: res.data.bairro,
+                        city: res.data.localidade 
+                    })
+        
+                })
+                .catch(error => { console.log(error)} )
+                }
     }
 
     validateForm = () => {
@@ -86,6 +101,11 @@ class NewUser extends Component {
 
         if (!this.state.email.includes("@") || !this.state.email.includes(".com")) {
             toast.warning(<ToastEmail />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
+            return false;
+        }
+
+        if (!this.state.cep.length === 8) {
+            toast.warning(<ToastCep />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
             return false;
         }
 
@@ -142,7 +162,9 @@ class NewUser extends Component {
                     <label className="textForm">CEP:</label>
                 </Segment>
 
-                <Input className="inputStyle" type="number" placeholder="CEP" value={this.state.cep} onChange={this.changeCep} onBlur={this.onBlurCep} required />
+                <Input className="inputStyle" type="number">
+                    <InputMask placeholder="00000-000" minLength="8" maxLength="8" onBlur={this.onBlurCep} onChange={this.changeCep} required /> 
+                </Input>
 
                 <Segment className="segText">
                     <label className="textForm">Rua:</label>
