@@ -14,30 +14,26 @@ const ToastEmail = () => {
     )
 }
 
-const ToastCep = () => {
-    return (
-        <div>O campo "CEP" deve ter 8 números.</div>
-    )
-}
-
 class NewUser extends Component {
     constructor() {
         super()
         this.state = {
-            id: '',
-            name: '',
-            cpf: '',
-            email: '',
-            cep: '',
-            street: '',
-            number: '',
-            district: '',
-            city: ''
+            id: "",
+            nome: "",
+            cpf: "",
+            email: "",
+            endereco: {
+              cep: "",
+              rua: "",
+              numero: "",
+              bairro: "",
+              cidade: ""
+            }
         }
     }
 
     changeName = e => {
-        this.setState({ name: e.target.value })
+        this.setState({ nome: e.target.value })
     }
 
     changeCpf = e => {
@@ -49,23 +45,33 @@ class NewUser extends Component {
     }
 
     changeCep = e => {
-        this.setState({ cep: e.target.value })
+        var endereco = {...this.state.endereco}
+        endereco.cep = e.target.value;
+        this.setState({ endereco })
     }
 
     changeStreet = e => {
-        this.setState({ street: e.target.value })
+        var endereco = {...this.state.endereco}
+        endereco.rua = e.target.value;
+        this.setState({ endereco })
     }
 
     changeNumber = e => {
-        this.setState({ number: e.target.value })
+        var endereco = {...this.state.endereco}
+        endereco.numero = e.target.value;
+        this.setState({ endereco })
     }
 
     changeDistrict = e => {
-        this.setState({ district: e.target.value })
+        var endereco = {...this.state.endereco}
+        endereco.bairro = e.target.value;
+        this.setState({ endereco })
     }
 
     changeCity = e => {
-        this.setState({ city: e.target.value })
+        var endereco = {...this.state.endereco}
+        endereco.cidade = e.target.value;
+        this.setState({ endereco })
     }
 
     onBlurCep = e => {
@@ -76,7 +82,9 @@ class NewUser extends Component {
             return;
         } else {
 
-            this.setState({ cep: e.target.value })
+            var endereco = {...this.state.endereco}
+            endereco.cep = e.target.value;
+            this.setState({ endereco })
 
             // Autocomplete CEP - ViaCep quando sair do input
 
@@ -85,11 +93,12 @@ class NewUser extends Component {
 
                     // Setar state de acordo com os dados do json (viacep)
 
-                    this.setState({ 
-                        street: res.data.logradouro,
-                        district: res.data.bairro,
-                        city: res.data.localidade 
-                    })
+                    var endereco = {...this.state.endereco}
+                    endereco.rua = res.data.logradouro;
+                    endereco.bairro = res.data.bairro;
+                    endereco.cidade = res.data.localidade;
+
+                    this.setState({ endereco })
         
                 })
                 .catch(error => { console.log(error)} )
@@ -98,21 +107,32 @@ class NewUser extends Component {
 
     validateForm = () => {
 
-        this.setState({ id: Math.random() })
+        // Cast para int e atribuir valor ao id
 
-        /* Se não for válido, exibir warning e retornar false */
+        var idInteger = parseInt(this.state.id)
+        idInteger = Math.random()
+
+        this.setState({ id: idInteger })
+
+        // Cast para int e setar state
+
+        var endereco = {...this.state.endereco}
+
+        var cepInteger = parseInt(endereco.cep)
+        var numInteger = parseInt(endereco.numero)
+
+        endereco.cep = cepInteger;
+        endereco.numero = numInteger;
+        this.setState({ endereco })
+
+        // Validação
 
         if (!this.state.email.includes("@") || !this.state.email.includes(".com")) {
             toast.warning(<ToastEmail />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
             return false;
         }
 
-        if (!this.state.cep.length === 8) {
-            toast.warning(<ToastCep />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
-            return false;
-        }
-
-        if (!this.state.id) {
+        if (this.state.id.length === 0) {
             return false;
         }
 
@@ -136,15 +156,17 @@ class NewUser extends Component {
             // Limpar formulário
 
             this.setState({
-                id: '',
-                name: '',
-                cpf: '',
-                email: '',
-                cep: '',
-                street: '',
-                number: '',
-                district: '',
-                city: ''
+                id: "",
+                nome: "",
+                cpf: "",
+                email: "",
+                endereco: {
+                    cep: "",
+                    rua: "",
+                    numero: "",
+                    bairro: "",
+                    cidade: ""
+                }
             })
         }  
     }
@@ -158,7 +180,7 @@ class NewUser extends Component {
                     <label className="textForm">Nome:</label>
                 </Segment>
 
-                <Input className="inputStyle" type="text" placeholder="Nome" value={this.state.name} onChange={this.changeName} required />
+                <Input className="inputStyle" type="text" placeholder="Nome" value={this.state.nome} onChange={this.changeName} required />
 
                 <Segment className="segText">
                     <label className="textForm">CPF:</label>
@@ -177,32 +199,32 @@ class NewUser extends Component {
                 </Segment>
 
                 <Input className="inputStyle" type="number">
-                    <InputMask placeholder="00000-000" minLength="8" maxLength="8" onBlur={this.onBlurCep} onChange={this.changeCep} required /> 
+                    <InputMask placeholder="00000-000" minLength="8" maxLength="8" value={this.state.endereco.cep} onBlur={this.onBlurCep} onChange={this.changeCep} required /> 
                 </Input>
 
                 <Segment className="segText">
                     <label className="textForm">Rua:</label>
                 </Segment>
 
-                <Input className="inputStyle" type="text" placeholder="Rua" value={this.state.street} onChange={this.changeStreet} required />
+                <Input className="inputStyle" type="text" placeholder="Rua" value={this.state.endereco.rua} onChange={this.changeStreet} required />
 
                 <Segment className="segText">
                     <label className="textForm">Número:</label>
                 </Segment>
 
-                <Input className="inputStyle" type="number" placeholder="Número" value={this.state.number} onChange={this.changeNumber} required />
+                <Input className="inputStyle" type="number" placeholder="Número" value={this.state.endereco.numero} onChange={this.changeNumber} required />
 
                 <Segment className="segText">
                     <label className="textForm">Bairro:</label>
                 </Segment>
 
-                <Input className="inputStyle" type="text" placeholder="Bairro" value={this.state.district} onChange={this.changeDistrict} required />
+                <Input className="inputStyle" type="text" placeholder="Bairro" value={this.state.endereco.bairro} onChange={this.changeDistrict} required />
 
                 <Segment className="segText">
                     <label className="textForm">Cidade:</label>
                 </Segment>
 
-                <Input className="inputStyle" type="text" placeholder="Cidade" value={this.state.city} onChange={this.changeCity} required />
+                <Input className="inputStyle" type="text" placeholder="Cidade" value={this.state.endereco.cidade} onChange={this.changeCity} required />
 
                 <Segment className="segButton">
                     <Button type="submit" className="buttonStyle">Inserir</Button>
