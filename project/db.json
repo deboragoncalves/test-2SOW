@@ -1,0 +1,27 @@
+{
+  "usuarios": [
+    {
+      "nome": "Debora",
+      "cpf": "213.123.123-45",
+      "email": "debora@gmail.com",
+      "endereco": {
+        "cep": 89213000,
+        "rua": "rua joinville",
+        "numero": 785,
+        "bairro": "bairro algum",
+        "cidade": "cidade catarinense"
+      }
+    },
+    {
+      "name": "De",
+      "cpf": "123",
+      "email": "d@g.com",
+      "cep": "89204053",
+      "street": "Rua Presidente Costa e Silva",
+      "number": "1",
+      "district": "América",
+      "city": "Joinville",
+      "id": 0.6908163116010775
+    }
+  ]
+}

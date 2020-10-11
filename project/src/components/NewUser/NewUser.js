@@ -24,6 +24,7 @@ class NewUser extends Component {
     constructor() {
         super()
         this.state = {
+            id: '',
             name: '',
             cpf: '',
             email: '',
@@ -97,6 +98,8 @@ class NewUser extends Component {
 
     validateForm = () => {
 
+        this.setState({ id: Math.random() })
+
         /* Se não for válido, exibir warning e retornar false */
 
         if (!this.state.email.includes("@") || !this.state.email.includes(".com")) {
@@ -106,6 +109,10 @@ class NewUser extends Component {
 
         if (!this.state.cep.length === 8) {
             toast.warning(<ToastCep />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
+            return false;
+        }
+
+        if (!this.state.id) {
             return false;
         }
 
@@ -119,9 +126,17 @@ class NewUser extends Component {
         const isValid = this.validateForm();
 
         if (isValid) {
+
+            // Adicionar informações, fazendo o post e passando o state
+
+            axios.post("/usuarios", this.state)
+                .then(res => console.log(res))
+                .catch(error => { console.log(error) })
+
             // Limpar formulário
 
             this.setState({
+                id: '',
                 name: '',
                 cpf: '',
                 email: '',
@@ -131,7 +146,6 @@ class NewUser extends Component {
                 district: '',
                 city: ''
             })
-
         }  
     }
 
