@@ -1,29 +1,23 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import LoginPage from './components/Login/LoginPage.js'
-import ListPage from './components/List/ListPage.js'
-import FormPage from './components/Form/FormPage.js'
-import { isAuthenticated } from './auth'
+import Login from './components/Login/Login.js'
+import UsersList from './components/UsersList/UsersList.js'
+import UserForm from './components/UserForm/UserForm.js'
 
 /* Rota Privada: recebe um componente, com todos os seus atributos por props (path, component...). 
-Verifica autenticação e redireciona em caso negativo */
+Verifica autenticação (existe token no localStorage) e redireciona em caso negativo */
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route { ... rest} render={props => (
-        isAuthenticated() ? (
-        <Component {...props} />
-        ) : (
-            <Redirect to={{ pathname:"/", state: { from: props.location } }} />
-        )
-    )} />
-);
+const PrivateRoute = props => {
+    const isLogged = localStorage.getItem('token')
+    return isLogged ? <Route { ... props} /> : <Redirect to="/" />
+}
 
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={LoginPage} />
-            <PrivateRoute path="/list" component={ListPage} />
-            <PrivateRoute path="/form" component={FormPage} />
+            <Route exact path="/" component={Login} />
+            <PrivateRoute path="/list" component={UsersList} />
+            <PrivateRoute path="/form" component={UserForm} />
         </Switch>
     </BrowserRouter>
 );

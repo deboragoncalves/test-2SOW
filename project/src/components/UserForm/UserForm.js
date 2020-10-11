@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Segment } from "semantic-ui-react";
 
-class FormPage extends Component {
+class UserForm extends Component {
     render() {
         return (
             <Segment className="container">
@@ -11,4 +11,4 @@ class FormPage extends Component {
     }
 }
 
-export default FormPage;
+export default UserForm;
