@@ -59,19 +59,19 @@ class Login extends Component {
 
     validateForm = () => {
 
-        /* Se não for válido, exibir warning e retornar false */
+        /* Se não for válido, exibir warning e retornar false. ? - verificar se é null ou undefined */
 
-        if (this.state.name.length < 3) {
+        if (this.state.name?.length < 3) {
             toast.warning(<ToastName />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
             return false;
         }
 
-        if (this.state.password.length < 5) {
+        if (this.state.password?.length < 5) {
             toast.warning(<ToastPassword />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
             return false;
         } 
         
-        if (!this.state.username.includes("@") || !this.state.username.includes(".com")) {
+        if (!this.state.username?.includes("@") || !this.state.username.includes(".com")) {
             toast.warning(<ToastUsername />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
             return false;
         }

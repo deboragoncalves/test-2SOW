@@ -4,13 +4,15 @@ import { Form, Input, Button, Segment } from "semantic-ui-react";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import axios from 'axios'
+
 const ToastEmail = () => {
     return (
         <div>O campo "Email" deve estar em formato de Email (@, .com).</div>
     )
 }
 
-class UserForm extends Component {
+class NewUser extends Component {
     constructor() {
         super()
         this.state = {
@@ -55,6 +57,27 @@ class UserForm extends Component {
 
     changeCity = e => {
         this.setState({ city: e.target.value })
+    }
+
+    onBlurCep = e => {
+
+        // Validar CEP (máscara): 8 digítos. Sem pontos e traços.
+
+        // Autocomplete CEP - ViaCep quando sair do input 
+
+        axios.get('https://viacep.com.br/ws/' + e.target.value + '/json/')
+        .then(res => {
+
+            // Set state de acordo com os dados do json (viacep)
+
+            this.setState({ 
+                street: res.data.logradouro,
+                district: res.data.bairro,
+                city: res.data.localidade 
+            })
+        
+        })
+        .catch(error => { console.log("Error" + error)})
     }
 
     validateForm = () => {
@@ -119,7 +142,7 @@ class UserForm extends Component {
                     <label className="textForm">CEP:</label>
                 </Segment>
 
-                <Input className="inputStyle" type="number" placeholder="CEP" value={this.state.cep} onChange={this.changeCep} required />
+                <Input className="inputStyle" type="number" placeholder="CEP" value={this.state.cep} onChange={this.changeCep} onBlur={this.onBlurCep} required />
 
                 <Segment className="segText">
                     <label className="textForm">Rua:</label>
@@ -155,4 +178,4 @@ class UserForm extends Component {
     }
 }
 
-export default UserForm;
+export default NewUser;
