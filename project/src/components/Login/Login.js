@@ -21,7 +21,7 @@ const ToastPassword = () => {
 
 const ToastUsername = () => {
     return (
-        <div>O campo "Usuário" está incorreto e deve estar em formato de Email (@, .com).</div>
+        <div>O campo "Usuário" deve estar em formato de Email (@, .com).</div>
     )
 }
 
@@ -59,7 +59,7 @@ class Login extends Component {
 
     validateForm = () => {
 
-        /* Se não for válido, setar valor do state, exibir warning e retornar false */
+        /* Se não for válido, exibir warning e retornar false */
 
         if (this.state.name.length < 3) {
             toast.warning(<ToastName />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
@@ -71,7 +71,7 @@ class Login extends Component {
             return false;
         } 
         
-        if (!this.state.username.includes("@") || !this.state.username.includes(".")) {
+        if (!this.state.username.includes("@") || !this.state.username.includes(".com")) {
             toast.warning(<ToastUsername />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
             return false;
         }
@@ -94,7 +94,7 @@ class Login extends Component {
                 password: ''
             })
 
-            // Pegar valor input Nome, guardar id/token no localStorage e redirecionar para lista
+            // Pegar valor input Nome, guardar id/token no localStorage e redirect para true (lista)
 
             const name = e.target.elements.name.value
 
