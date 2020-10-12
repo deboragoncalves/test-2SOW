@@ -35,22 +35,20 @@ class UsersList extends Component {
 
     clickLogout = (e, { name }) => {
       this.setState({ activeItem: name, redirectLogin: true })
+
     }
 
-    clickDelete = e => {  
-      axios.delete("http://localhost:5000/usuarios/" + e)
+    clickDelete = id => {  
+      axios.delete("http://localhost:5000/usuarios/" + id)
         .then(res => console.log(res))
         .catch(error => { console.log(error) }) 
     }
 
     clickEdit = e => {
-      /* axios.put("http://localhost:5000/usuarios/" + item[e].id, item[e])
-        .then(res => {
-          this.setState({ redirectForm: true })  
+      
+      this.setState({ redirectForm: true })
 
-          console.log(res)
-        })
-        .catch(error => { console.log(error) }) */
+      // Passar dados para os inputs (redux). if ternário redirect form, post ou put
     }
 
     /* Get elementos json */
@@ -126,7 +124,7 @@ class UsersList extends Component {
                   <td>{user[index].email}</td>
                   <td>{user[index].endereco.cidade}
                   </td>
-                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickEdit(user[index].id)}><i aria-hidden="true" className="edit icon"></i></button></td>
+                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickEdit(user[index])}><i aria-hidden="true" className="edit icon"></i></button></td>
                   <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickDelete(user[index].id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button></td>
                 </tr>
               ))}
