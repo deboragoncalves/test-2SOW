@@ -10,10 +10,6 @@
     margin-top: 1px;
 }
 
-table {
-    border: 1px solid #7a7;
-}
-
 table th, table td {
     font-size: 18px;
     margin: 0;
@@ -30,4 +26,15 @@ ul li {
     text-align: left;
     width: 150px;
     padding: 0;
+}
+
+.lastColumnClass {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui.circular.icon.button {
+    margin: 10px;
+    padding: 15px;
 }

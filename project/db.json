@@ -1,19 +1,6 @@
 {
   "usuarios": [
     {
-      "id": 0.6754243731750866,
-      "nome": "Deb",
-      "cpf": "123",
-      "email": "d@g.com",
-      "endereco": {
-        "cep": 89204053,
-        "rua": "Rua Presidente Costa e Silva",
-        "numero": 1,
-        "bairro": "América",
-        "cidade": "Joinville"
-      }
-    },
-    {
       "id": 0.8409873118922084,
       "nome": "Algum",
       "cpf": "123",

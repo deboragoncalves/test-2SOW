@@ -17,6 +17,10 @@ class UsersList extends Component {
         redirectForm: false,
         activeItem: ''
       }
+
+      this.clickDelete = this.clickDelete.bind(this);
+      this.clickEdit = this.clickEdit.bind(this);
+
     }
 
     /* Chamar get no mounted */
@@ -31,6 +35,18 @@ class UsersList extends Component {
 
     clickLogout = (e, { name }) => {
       this.setState({ activeItem: name, redirectLogin: true })
+    }
+
+    clickDelete = (e, item) => {  
+      axios.delete("http://localhost:5000/usuarios/" + item[e].id)
+        .then(res => console.log(res))
+        .catch(error => { console.log(error) }) 
+    }
+
+    clickEdit = (e, item) => {
+      alert("Clicou" + item[e])
+
+      // axios.put()
     }
 
     /* Get elementos json */
@@ -92,7 +108,7 @@ class UsersList extends Component {
                     Sair
                   </Menu.Item>
               </Menu>
-            <table>
+            <table id="table">
               <thead>
                 <tr>
                   <th>Nome</th>
@@ -151,15 +167,17 @@ class UsersList extends Component {
                     for (var i = 0; i < item.length; i++) {
 
                      return (
-                          <ul key={index}>
+                          <ul key={index} className="lastColumnClass">
                             <li>
                               <p>{item[i].endereco.cidade}</p>
                             </li>
+                            <button className="ui circular icon button" onClick={() => this.clickEdit(i, item)}><i aria-hidden="true" className="edit icon"></i></button>
+                            <button className="ui circular icon button" onClick={() => this.clickDelete(i, item)}><i aria-hidden="true" className="trash alternate outline icon"></i></button>
                           </ul>
                       )}        
-                   })}
-                  </ul></td>
-                  </tr>
+                   }, this)}
+                  </ul>
+                  </td></tr>
               </tbody>
             </table>
             </div>
