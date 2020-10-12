@@ -44,9 +44,9 @@ class UsersList extends Component {
     }
 
     clickEdit = (e, item) => {
-      alert("Clicou" + item[e])
-
-      // axios.put()
+      axios.put("http://localhost:5000/usuarios/" + item[e].id, item[e])
+        .then(res => console.log(res))
+        .catch(error => { console.log(error) })
     }
 
     /* Get elementos json */
@@ -65,10 +65,7 @@ class UsersList extends Component {
     }
 
     render() {
-        const { activeItem } = this.state
-
-        const { redirectForm } = this.state;
-        const { redirectLogin } = this.state;
+        const { activeItem, redirectLogin, redirectForm } = this.state
 
         // Se for redirect true, redirecionar
 

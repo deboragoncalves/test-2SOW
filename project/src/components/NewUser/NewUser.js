@@ -52,36 +52,51 @@ class NewUser extends Component {
     }
 
     changeName = e => {
-        this.setState({ data: { nome: e.target.value }})
+        var data = {...this.state.data}
+        data.nome = e.target.value;
+        this.setState({ data })
     }
 
     changeCpf = e => {
-        this.setState({ data: { cpf: e.target.value }})
+        var data = {...this.state.data}
+        data.cpf = e.target.value;
+        this.setState({ data })
     }
 
     changeEmail = e => {
-        this.setState({ data: { email: e.target.value }})
+        var data = {...this.state.data}
+        data.email = e.target.value;
+        this.setState({ data })
     }
 
     changeCep = e => {
-        this.setState({ data: { endereco: { cep: e.target.value }} })
+        var data = {...this.state.data}
+        data.endereco.cep = e.target.value;
+        this.setState({ data })
     }
 
     changeStreet = e => {
-        this.setState({ data: { endereco: { rua: e.target.value }} })
-
+        var data = {...this.state.data}
+        data.endereco.rua = e.target.value;
+        this.setState({ data })
     }
 
     changeNumber = e => {
-        this.setState({ data: { endereco: { numero: e.target.value }} })
+        var data = {...this.state.data}
+        data.endereco.numero = e.target.value;
+        this.setState({ data })
     }
 
     changeDistrict = e => {
-        this.setState({ data: { endereco: { bairro: e.target.value }} })
+        var data = {...this.state.data}
+        data.endereco.bairro = e.target.value;
+        this.setState({ data })
     }
 
     changeCity = e => {
-        this.setState({ data: { endereco: { cidade: e.target.value }} })
+        var data = {...this.state.data}
+        data.endereco.cidade = e.target.value;
+        this.setState({ data })
     }
 
     onBlurCep = e => {
@@ -92,7 +107,9 @@ class NewUser extends Component {
             return;
         } else {
 
-        this.setState({ data: { endereco: { cep: e.target.value }} })
+        var data = {...this.state.data}
+        data.endereco.cep = e.target.value;
+        this.setState({ data })
 
             // Autocomplete CEP - ViaCep quando sair do input
 
@@ -101,11 +118,11 @@ class NewUser extends Component {
 
                     // Setar state de acordo com os dados do json (viacep)
 
-                    this.setState({ data: { endereco: { 
-                        rua: res.data.logradouro,
-                        bairro: res.data.bairro,
-                        cidade: res.data.localidade
-                    }} })
+                    var data = {...this.state.data}
+                    data.endereco.rua = res.data.logradouro;
+                    data.endereco.bairro = res.data.bairro;
+                    data.endereco.cidade = res.data.localidade;
+                    this.setState({ data })
         
                 })
                 .catch(error => { console.log(error)} )
@@ -116,26 +133,30 @@ class NewUser extends Component {
 
         // Cast para int e atribuir valor ao id
 
-        var idInteger = parseInt(this.state.data.id)
-        idInteger = Math.random()
+        var data = {...this.state.data}
 
-        this.setState({ data: { id: idInteger } })
+        var idInteger = Math.random() 
+        data.id = idInteger
+        parseInt(data.id)
+        this.setState({ data })
 
         // Cast para int e setar state
 
-        var cepInteger = parseInt(this.state.data.endereco.cep)
-        var numInteger = parseInt(this.state.data.endereco.numero)
+        var cepInteger = parseInt(data.endereco.cep)
+        var numInteger = parseInt(data.endereco.numero)
 
-        this.setState({ data: { endereco: { cep: cepInteger, numero: numInteger } }})
+        data.endereco.cep = cepInteger
+        data.endereco.numero = numInteger
+        this.setState({ data })
 
         // Validação
 
-        if (!this.state.data.email.includes("@") || !this.state.data.email.includes(".com")) {
+        if (!data.email.includes("@") || !data.email.includes(".com")) {
             toast.warning(<ToastEmail />, {position: toast.POSITION.TOP_LEFT, autoClose: false})
             return false;
         }
 
-        if (this.state.data.id.length === 0) {
+        if (data.id.length === 0) {
             return false;
         }
 
@@ -181,10 +202,7 @@ class NewUser extends Component {
     }
 
     render() {
-        const { activeItem } = this.state
-
-        const { redirectList } = this.state;
-        const { redirectLogin } = this.state;
+        const { activeItem, redirectList, redirectLogin } = this.state;
 
         // Se for redirect true, redirecionar
 
