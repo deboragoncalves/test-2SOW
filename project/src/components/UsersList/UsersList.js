@@ -8,6 +8,16 @@ import axios from 'axios';
 
 import "./list.css";
 
+import { connect } from 'react-redux'
+
+import { sendItemList } from './state/itemListActions.js'
+
+const mapDispatchToProps = dispatch => ({
+  sendItemList: item => {
+  dispatch(sendItemList({ type: 'SEND_ITEM_LIST' }, item));
+  },
+ });
+
 class UsersList extends Component {
     constructor() {
       super();
@@ -47,6 +57,8 @@ class UsersList extends Component {
     clickEdit = e => {
       
       this.setState({ redirectForm: true })
+
+      this.mapDispatchToProps(e);
 
       // Passar dados para os inputs (redux). if ternário redirect form, post ou put
     }
@@ -135,4 +147,4 @@ class UsersList extends Component {
     }
 }
 
-export default UsersList;
+export default connect(mapDispatchToProps)(UsersList);
