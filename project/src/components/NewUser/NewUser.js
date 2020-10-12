@@ -8,6 +8,10 @@ import axios from 'axios'
 
 import InputMask from 'react-input-mask'
 
+import { Menu } from 'semantic-ui-react'
+
+import "./newUser.css";
+
 const ToastEmail = () => {
     return (
         <div>O campo "Email" deve estar em formato de Email (@, .com).</div>
@@ -31,6 +35,8 @@ class NewUser extends Component {
             }
         }
     }
+
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     changeName = e => {
         this.setState({ nome: e.target.value })
@@ -149,7 +155,7 @@ class NewUser extends Component {
 
             // Adicionar informações, fazendo o post e passando o state
 
-            axios.post("/usuarios", this.state)
+            axios.post("http://localhost:5000/usuarios", this.state)
                 .then(res => console.log(res))
                 .catch(error => { console.log(error) })
 
@@ -172,8 +178,40 @@ class NewUser extends Component {
     }
 
     render() {
+        const { activeItem } = this.state
+
         return (
             <Segment className="container">
+                <Menu className="menu">
+                    <Menu.Item
+                        name='users'
+                        active={activeItem === 'Users'}
+                        onClick={this.handleItemClick}
+                    >
+                    Users
+                  </Menu.Item>
+                    <Menu.Item
+                        name='lista'
+                        active={activeItem === 'Lista'}
+                        onClick={this.handleItemClick}
+                    >
+                    Lista
+                  </Menu.Item>
+                  <Menu.Item
+                        name='editar'
+                        active={activeItem === 'Editar'}
+                        onClick={this.handleItemClick}
+                    >
+                    Editar Usuário
+                  </Menu.Item>
+                  <Menu.Item
+                        name='sair'
+                        active={activeItem === 'Sair'}
+                        onClick={this.handleItemClick}
+                    >
+                    Sair
+                  </Menu.Item>
+              </Menu>
             <Form className="formStyle" onSubmit={this.submitForm}>
 
                 <Segment className="segText">

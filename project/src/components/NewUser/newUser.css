@@ -1,0 +1,9 @@
+.ui.segment.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 650px;
+    border: none;
+    box-shadow: none;
+}
