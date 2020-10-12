@@ -174,14 +174,19 @@ class NewUser extends Component {
             // Adicionar informações, fazendo o post e passando o state
 
             axios.post("http://localhost:5000/usuarios", this.state.data)
-                .then(res => console.log(res))
+                .then(res => {
+                    // Redirecionar para lista
+
+                    this.setState({ redirectList: true })
+
+                    console.log(res)
+                })
                 .catch(error => { console.log(error) })
 
             // Limpar formulário
 
             this.setState({
                 redirectLogin: false,
-                redirectList: false,
                 activeItem: '',
                 data: {
                     id: "",

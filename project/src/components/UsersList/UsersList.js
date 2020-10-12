@@ -37,16 +37,20 @@ class UsersList extends Component {
       this.setState({ activeItem: name, redirectLogin: true })
     }
 
-    clickDelete = (e, item) => {  
-      axios.delete("http://localhost:5000/usuarios/" + item[e].id)
+    clickDelete = e => {  
+      axios.delete("http://localhost:5000/usuarios/" + e)
         .then(res => console.log(res))
         .catch(error => { console.log(error) }) 
     }
 
-    clickEdit = (e, item) => {
-      axios.put("http://localhost:5000/usuarios/" + item[e].id, item[e])
-        .then(res => console.log(res))
-        .catch(error => { console.log(error) })
+    clickEdit = e => {
+      /* axios.put("http://localhost:5000/usuarios/" + item[e].id, item[e])
+        .then(res => {
+          this.setState({ redirectForm: true })  
+
+          console.log(res)
+        })
+        .catch(error => { console.log(error) }) */
     }
 
     /* Get elementos json */
@@ -115,66 +119,17 @@ class UsersList extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><ul>
-                   {this.state.userList.map(function(item, index) {
-
-                    for (var i = 0; i < item.length; i++) {
-
-                     return (
-                          <ul key={index}>
-                            <li>
-                              <p>{item[i].nome}</p>
-                            </li>
-                          </ul>
-                      )}        
-                   })}
-                  </ul></td>
-                  <td><ul>
-                   {this.state.userList.map(function(item, index) {
-
-                    for (var i = 0; i < item.length; i++) {
-
-                     return (
-                          <ul key={index}>
-                            <li>
-                              <p>{item[i].cpf}</p>
-                            </li>
-                          </ul>
-                      )}        
-                   })}
-                  </ul></td>
-                  <td><ul>
-                   {this.state.userList.map(function(item, index) {
-
-                    for (var i = 0; i < item.length; i++) {
-
-                     return (
-                          <ul key={index}>
-                            <li>
-                              <p>{item[i].email}</p>
-                            </li>
-                          </ul>
-                      )}        
-                   })}
-                  </ul></td>
-                  <td><ul>
-                   {this.state.userList.map(function(item, index) {
-
-                    for (var i = 0; i < item.length; i++) {
-
-                     return (
-                          <ul key={index} className="lastColumnClass">
-                            <li>
-                              <p>{item[i].endereco.cidade}</p>
-                            </li>
-                            <button className="ui circular icon button" onClick={() => this.clickEdit(i, item)}><i aria-hidden="true" className="edit icon"></i></button>
-                            <button className="ui circular icon button" onClick={() => this.clickDelete(i, item)}><i aria-hidden="true" className="trash alternate outline icon"></i></button>
-                          </ul>
-                      )}        
-                   }, this)}
-                  </ul>
-                  </td></tr>
+              {this.state.userList.map((user, index) => (
+                <tr key={index}>
+                  <td>{user[index].nome}</td>
+                  <td>{user[index].cpf}</td>
+                  <td>{user[index].email}</td>
+                  <td>{user[index].endereco.cidade}
+                  </td>
+                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickEdit(user[index].id)}><i aria-hidden="true" className="edit icon"></i></button></td>
+                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickDelete(user[index].id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button></td>
+                </tr>
+              ))}
               </tbody>
             </table>
             </div>
