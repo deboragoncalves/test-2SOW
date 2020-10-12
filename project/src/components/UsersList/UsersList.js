@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Menu } from 'semantic-ui-react'
 
+import { Redirect } from "react-router-dom";
+
 import axios from 'axios';
 
 import "./list.css";
@@ -10,7 +12,10 @@ class UsersList extends Component {
     constructor() {
       super();
       this.state = {
-        userList: []
+        userList: [],
+        redirectLogin: false,
+        redirectForm: false,
+        activeItem: ''
       }
     }
 
@@ -20,7 +25,13 @@ class UsersList extends Component {
         this.getElements();
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    clickEditUser = (e, { name }) => {
+      this.setState({ activeItem: name, redirectForm: true })
+    }
+
+    clickLogout = (e, { name }) => {
+      this.setState({ activeItem: name, redirectLogin: true })
+    }
 
     /* Get elementos json */
 
@@ -40,34 +51,43 @@ class UsersList extends Component {
     render() {
         const { activeItem } = this.state
 
+        const { redirectForm } = this.state;
+        const { redirectLogin } = this.state;
+
+        // Se for redirect true, redirecionar
+
+        if (redirectForm) {
+            return <Redirect to='/form'/>;
+        }  
+
+        if (redirectLogin) {
+            localStorage.clear()
+            return <Redirect to='/'/>;
+        } 
+
         return (
           <div className="containerTable">
                   <Menu className="menu">
                     <Menu.Item
-                        name='users'
-                        active={activeItem === 'Users'}
-                        onClick={this.handleItemClick}
-                    >
+                        name='users'>
                     Users
                   </Menu.Item>
                     <Menu.Item
-                        name='lista'
-                        active={activeItem === 'Lista'}
-                        onClick={this.handleItemClick}
+                        name='list'
                     >
                     Lista
                   </Menu.Item>
                   <Menu.Item
-                        name='editar'
-                        active={activeItem === 'Editar'}
-                        onClick={this.handleItemClick}
+                        name='editUser'
+                        active={activeItem === 'editUser'}
+                        onClick={this.clickEditUser}
                     >
                     Editar Usuário
                   </Menu.Item>
                   <Menu.Item
-                        name='sair'
-                        active={activeItem === 'Sair'}
-                        onClick={this.handleItemClick}
+                        name='logout'
+                        active={activeItem === 'logout'}
+                        onClick={this.clickLogout}
                     >
                     Sair
                   </Menu.Item>
