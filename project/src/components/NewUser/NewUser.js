@@ -281,11 +281,10 @@ class NewUser extends Component {
                     Lista
                   </Menu.Item>
                   <Menu.Item
-                        name='editUser'
-                        active={activeItem === 'editUser'}
-                        onClick={this.clickEditUser}
+                        name='newUser'
+                        active={activeItem === 'newUser'}
                     >
-                    Editar Usuário
+                    Novo Usuário
                   </Menu.Item>
                   <Menu.Item
                         name='logout'

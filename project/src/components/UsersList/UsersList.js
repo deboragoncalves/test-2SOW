@@ -15,12 +15,6 @@ import { usuarios } from 'C:/Users/ADMIN/test-2SOW/project/src/data/db.json'
 import { store } from 'C:/Users/ADMIN/test-2SOW/project/src/state/store.js';
 import { sendItemList } from 'C:/Users/ADMIN/test-2SOW/project/src/state/actions.js';
 
-const ToastName = () => {
-  return (
-      <div>O nome procurado não existe na tabela.</div>
-  )
-}
-
 class UsersList extends Component {
     constructor() {
       super();
@@ -46,7 +40,7 @@ class UsersList extends Component {
         .catch(error => console.log(error))
     }
     
-    clickEditUser = (e, { name }) => {
+    clickNewUser = (e, { name }) => {
       this.setState({ activeItem: name, redirectForm: true })
     }
 
@@ -98,11 +92,11 @@ class UsersList extends Component {
                     Lista
                   </Menu.Item>
                   <Menu.Item
-                        name='editUser'
-                        active={activeItem === 'editUser'}
-                        onClick={this.clickEditUser}
+                        name='newUser'
+                        active={activeItem === 'newUser'}
+                        onClick={this.clickNewUser}
                     >
-                    Editar Usuário
+                    Novo Usuário
                   </Menu.Item>
                   <Menu.Item
                         name='logout'
