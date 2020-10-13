@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Menu } from 'semantic-ui-react'
+import { Menu, Input } from 'semantic-ui-react'
 
 import { Redirect } from "react-router-dom";
 
@@ -15,10 +15,17 @@ import { usuarios } from 'C:/Users/ADMIN/test-2SOW/project/src/data/db.json'
 import { store } from 'C:/Users/ADMIN/test-2SOW/project/src/state/store.js';
 import { sendItemList } from 'C:/Users/ADMIN/test-2SOW/project/src/state/actions.js';
 
+const ToastName = () => {
+  return (
+      <div>O nome procurado não existe na tabela.</div>
+  )
+}
+
 class UsersList extends Component {
     constructor() {
       super();
       this.state = {
+        searchName: '',
         redirectLogin: false,
         redirectForm: false,
         activeItem: ''
@@ -29,6 +36,16 @@ class UsersList extends Component {
 
     }
 
+    changeSearchName = e => {
+      this.setState({ searchName: e.target.value })
+
+      // Get pelo nome
+
+      axios.get("http://localhost:5000/usuarios/?q=" + this.state.searchName)
+        .then(res => console.log(res))
+        .catch(error => console.log(error))
+    }
+    
     clickEditUser = (e, { name }) => {
       this.setState({ activeItem: name, redirectForm: true })
     }
@@ -95,6 +112,7 @@ class UsersList extends Component {
                     Sair
                   </Menu.Item>
               </Menu>
+            <Input placeholder="Buscar pelo nome..." className="inputStyle" type="text" value={this.state.searchName} onChange={this.changeSearchName} />
             <table id="table">
               <thead>
                 <tr>
@@ -105,7 +123,7 @@ class UsersList extends Component {
                 </tr>
               </thead>
               <tbody>
-              {usuarios.map((user, index) => (
+              {usuarios.map((user, index) => this.state.searchName === user.nome ? (
                 <tr key={index}>
                   <td>{user.nome}</td>
                   <td>{user.cpf}</td>
@@ -113,8 +131,18 @@ class UsersList extends Component {
                   <td>{user.endereco.cidade}</td>
                   <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickEdit(user)}><i aria-hidden="true" className="edit icon"></i></button></td>
                   <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickDelete(user.id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button></td>
-                </tr>
-              ))}
+                </tr> 
+              ) : 
+              this.state.searchName === '' ?
+              <tr key={index}>
+                  <td>{user.nome}</td>
+                  <td>{user.cpf}</td>
+                  <td>{user.email}</td>
+                  <td>{user.endereco.cidade}</td>
+                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickEdit(user)}><i aria-hidden="true" className="edit icon"></i></button></td>
+                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickDelete(user.id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button></td>
+              </tr> : null )}
+
               </tbody>
             </table>
             </div>

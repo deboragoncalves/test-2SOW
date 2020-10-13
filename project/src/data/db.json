@@ -2,7 +2,7 @@
   "usuarios": [
     {
       "id": 3,
-      "nome": "Teste",
+      "nome": "Debora",
       "cpf": "123",
       "email": "d@g.com",
       "endereco": {
@@ -15,7 +15,7 @@
     },
     {
       "id": 4,
-      "nome": "Teste",
+      "nome": "Algum",
       "cpf": "12345",
       "email": "d@g.com",
       "endereco": {
@@ -27,15 +27,15 @@
       }
     },
     {
-      "id": 5,
-      "nome": "Teste 7",
-      "cpf": "12345",
-      "email": "d@g.com",
+      "id": 6,
+      "nome": "Tati",
+      "cpf": "123",
+      "email": "debora@g.com",
       "endereco": {
-        "cep": 89204053,
-        "rua": "Rua Presidente Costa e Silva",
-        "numero": 12345,
-        "bairro": "América",
+        "cep": 89218060,
+        "rua": "Rua Guia Lopes",
+        "numero": 123,
+        "bairro": "Santo Antônio",
         "cidade": "Joinville"
       }
     }
