@@ -1,14 +1,27 @@
 {
   "usuarios": [
     {
-      "id": 2,
-      "nome": "Outro",
+      "id": 3,
+      "nome": "Teste",
       "cpf": "123",
       "email": "d@g.com",
       "endereco": {
         "cep": 89204053,
         "rua": "Rua Presidente Costa e Silva",
         "numero": 1,
+        "bairro": "América",
+        "cidade": "Joinville"
+      }
+    },
+    {
+      "id": 4,
+      "nome": "Teste",
+      "cpf": "12345",
+      "email": "d@g.com",
+      "endereco": {
+        "cep": 89204053,
+        "rua": "Rua Presidente Costa e Silva",
+        "numero": 123,
         "bairro": "América",
         "cidade": "Joinville"
       }

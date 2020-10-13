@@ -8,15 +8,10 @@ import axios from 'axios';
 
 import "./list.css";
 
-import { connect } from 'react-redux'
+// Absolute path: não functiona com relative 
 
-import { sendItemList } from './state/itemListActions.js'
-
-const mapDispatchToProps = dispatch => ({
-  sendItemList: item => {
-  dispatch(sendItemList({ type: 'SEND_ITEM_LIST' }, item));
-  },
- });
+import { store } from 'C:/Users/ADMIN/test-2SOW/project/src/state/store.js';
+import { sendItemList } from 'C:/Users/ADMIN/test-2SOW/project/src/state/actions.js';
 
 class UsersList extends Component {
     constructor() {
@@ -58,9 +53,10 @@ class UsersList extends Component {
       
       this.setState({ redirectForm: true })
 
-      this.mapDispatchToProps(e);
+      // Passar dados para os inputs. 
+      
+      store.dispatch(sendItemList(e, true))
 
-      // Passar dados para os inputs (redux). if ternário redirect form, post ou put
     }
 
     /* Get elementos json */
@@ -147,4 +143,4 @@ class UsersList extends Component {
     }
 }
 
-export default connect(mapDispatchToProps)(UsersList);
+export default UsersList;

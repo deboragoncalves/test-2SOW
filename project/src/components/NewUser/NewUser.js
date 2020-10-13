@@ -12,6 +12,10 @@ import { Redirect } from "react-router-dom";
 
 import { Menu } from 'semantic-ui-react'
 
+// Absolute path: não functiona com relative 
+
+import { store } from 'C:/Users/ADMIN/test-2SOW/project/src/state/store.js';
+
 import "./newUser.css";
 
 const ToastEmail = () => {
@@ -40,6 +44,30 @@ class NewUser extends Component {
                     cidade: ""
                 }
             }
+        }
+    }
+
+    componentDidMount() {
+        console.log(store.getState().item)
+        console.log(store.getState().redirectForm)
+
+        // Se botão foi clicado, setar state e preencher inputs 
+
+        if (store.getState().redirectForm) {
+
+            var data = {...this.state.data}
+
+            data.id = store.getState().item.id;
+            data.nome = store.getState().item.nome;
+            data.cpf = store.getState().item.cpf;
+            data.email = store.getState().item.email;
+            data.endereco.cep = store.getState().item.endereco.cep;
+            data.endereco.rua = store.getState().item.endereco.rua;
+            data.endereco.numero = store.getState().item.endereco.numero;
+            data.endereco.bairro = store.getState().item.endereco.bairro;
+            data.endereco.cidade = store.getState().item.endereco.cidade;
+
+            this.setState({ data })
         }
     }
 
@@ -171,17 +199,34 @@ class NewUser extends Component {
 
         if (isValid) {
 
-            // Adicionar informações, fazendo o post e passando o state
+            // Se o botão Editar foi clicado, fazer o put. Se não, post.
 
-            axios.post("http://localhost:5000/usuarios", this.state.data)
+            if (store.getState().redirectForm) {
+                axios.put("http://localhost:5000/usuarios/" + this.state.data.id, this.state.data)
+                    .then(res => {
+                        // Redirecionar para lista
+
+                        this.setState({ redirectList: true })
+
+                        console.log(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            } else {
+                axios.post("http://localhost:5000/usuarios", this.state.data)
                 .then(res => {
+
                     // Redirecionar para lista
 
                     this.setState({ redirectList: true })
 
                     console.log(res)
                 })
-                .catch(error => { console.log(error) })
+                .catch(error => { 
+                    console.log(error) 
+                })
+            }
 
             // Limpar formulário
 

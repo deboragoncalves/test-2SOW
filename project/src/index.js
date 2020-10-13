@@ -4,7 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux'
-import store from './state/store'
+import { store } from 'C:/Users/ADMIN/test-2SOW/project/src/state/store.js';
 
 import 'semantic-ui-css/semantic.min.css'
 
