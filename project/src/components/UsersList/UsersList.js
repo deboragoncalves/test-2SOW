@@ -10,6 +10,8 @@ import "./list.css";
 
 // Absolute path: não functiona com relative 
 
+import { usuarios } from 'C:/Users/ADMIN/test-2SOW/project/src/data/db.json'
+
 import { store } from 'C:/Users/ADMIN/test-2SOW/project/src/state/store.js';
 import { sendItemList } from 'C:/Users/ADMIN/test-2SOW/project/src/state/actions.js';
 
@@ -17,7 +19,6 @@ class UsersList extends Component {
     constructor() {
       super();
       this.state = {
-        userList: [],
         redirectLogin: false,
         redirectForm: false,
         activeItem: ''
@@ -26,12 +27,6 @@ class UsersList extends Component {
       this.clickDelete = this.clickDelete.bind(this);
       this.clickEdit = this.clickEdit.bind(this);
 
-    }
-
-    /* Chamar get no mounted */
-
-    componentDidMount() {
-        this.getElements();
     }
 
     clickEditUser = (e, { name }) => {
@@ -57,21 +52,6 @@ class UsersList extends Component {
       
       store.dispatch(sendItemList(e, true))
 
-    }
-
-    /* Get elementos json */
-
-    getElements() {
-        axios.get("http://localhost:5000/usuarios")
-            .then(res => {
-
-              this.state.userList.push(res.data)
-
-              this.setState({ ...this.state.userList })
-
-              console.log(res)
-            })
-            .catch(error => { console.log(error) })
     }
 
     render() {
@@ -125,15 +105,14 @@ class UsersList extends Component {
                 </tr>
               </thead>
               <tbody>
-              {this.state.userList.map((user, index) => (
+              {usuarios.map((user, index) => (
                 <tr key={index}>
-                  <td>{user[index].nome}</td>
-                  <td>{user[index].cpf}</td>
-                  <td>{user[index].email}</td>
-                  <td>{user[index].endereco.cidade}
-                  </td>
-                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickEdit(user[index])}><i aria-hidden="true" className="edit icon"></i></button></td>
-                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickDelete(user[index].id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button></td>
+                  <td>{user.nome}</td>
+                  <td>{user.cpf}</td>
+                  <td>{user.email}</td>
+                  <td>{user.endereco.cidade}</td>
+                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickEdit(user)}><i aria-hidden="true" className="edit icon"></i></button></td>
+                  <td className="buttonRow"><button className="ui circular icon button" onClick={() => this.clickDelete(user.id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button></td>
                 </tr>
               ))}
               </tbody>

@@ -25,6 +25,19 @@
         "bairro": "América",
         "cidade": "Joinville"
       }
+    },
+    {
+      "id": 5,
+      "nome": "Teste 7",
+      "cpf": "12345",
+      "email": "d@g.com",
+      "endereco": {
+        "cep": 89204053,
+        "rua": "Rua Presidente Costa e Silva",
+        "numero": 12345,
+        "bairro": "América",
+        "cidade": "Joinville"
+      }
     }
   ]
 }
