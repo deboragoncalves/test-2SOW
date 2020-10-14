@@ -1,6 +1,6 @@
 # Test 2SOW
 
-### This project was done for a test to Front-End Developer in the 2SOW company. It's a cadaster system, where the user could do a CRUD (show, add, edit and delete) and also can search by the name of some user. It was done using React, with the lib Semantic UI, Redux and JSON Server API.
+### This project was done for a test to Front-End Developer in the 2SOW company. It's a cadaster system, where the user could do a CRUD and also can search by the name of some user. It was done using React, with the lib Semantic UI and Redux.
 
 ### 1. To run the project:
 
