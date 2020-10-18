@@ -10,4 +10,4 @@
 
 ##### npm run server
 
-### 2. Open http://localhost:3000/ to see the project and also open http://localhost:5000/usuarios to see the data base (JSON).
+### 2. Open http://localhost:3000/ to see the project and also open http://localhost:5000/usuarios to see the data base.
